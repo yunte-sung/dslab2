@@ -30,6 +30,19 @@ gapminder_clean <- gapminder %>%
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+Tidyverse, data manipulation
+```{r}
+data <- gapminder_clean |> 
+  filter(continent == "Americas") |>
+  mutate(rich_or_poor = if_else(gdp_per_cap >= mean(gdp_per_cap),
+                                "Rich",
+                                "Poor"))
+data
+```
+
+
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.

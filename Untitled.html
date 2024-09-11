@@ -355,7 +355,49 @@ display: none;
 </div>
 
 
-<p>Ctrl + option + i</p>
+<p>Ctrl + option + i # Set-up your script ——————————————————</p>
+<pre class="r"><code>#install.packages(c(&quot;tidyverse&quot;, &quot;gapminder&quot;, &quot;pacman&quot;)) # uncomment if already installed
+pacman::p_load(tidyverse, gapminder)</code></pre>
+<div id="load-your-data-into-r" class="section level1">
+<h1>Load your Data into R —————————————————</h1>
+<pre class="r"><code>data(gapminder)
+head(gapminder)</code></pre>
+<pre><code>## # A tibble: 6 × 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.</code></pre>
+</div>
+<div id="clean-your-data" class="section level1">
+<h1>Clean your Data ———————————————————</h1>
+<pre class="r"><code>gapminder_clean &lt;- gapminder %&gt;% 
+  rename(life_exp = lifeExp, gdp_per_cap = gdpPercap) %&gt;% 
+  mutate(gdp = pop * gdp_per_cap)</code></pre>
+<p>Tidyverse, data manipulation</p>
+<pre class="r"><code>data &lt;- gapminder_clean |&gt; 
+  filter(continent == &quot;Americas&quot;) |&gt;
+  mutate(rich_or_poor = if_else(gdp_per_cap &gt;= mean(gdp_per_cap),
+                                &quot;Rich&quot;,
+                                &quot;Poor&quot;))
+data</code></pre>
+<pre><code>## # A tibble: 300 × 8
+##    country   continent  year life_exp      pop gdp_per_cap      gdp rich_or_poor
+##    &lt;fct&gt;     &lt;fct&gt;     &lt;int&gt;    &lt;dbl&gt;    &lt;int&gt;       &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       
+##  1 Argentina Americas   1952     62.5 17876956       5911.  1.06e11 Poor        
+##  2 Argentina Americas   1957     64.4 19610538       6857.  1.34e11 Poor        
+##  3 Argentina Americas   1962     65.1 21283783       7133.  1.52e11 Poor        
+##  4 Argentina Americas   1967     65.6 22934225       8053.  1.85e11 Rich        
+##  5 Argentina Americas   1972     67.1 24779799       9443.  2.34e11 Rich        
+##  6 Argentina Americas   1977     68.5 26983828      10079.  2.72e11 Rich        
+##  7 Argentina Americas   1982     69.9 29341374       8998.  2.64e11 Rich        
+##  8 Argentina Americas   1987     70.8 31620918       9140.  2.89e11 Rich        
+##  9 Argentina Americas   1992     71.9 33958947       9308.  3.16e11 Rich        
+## 10 Argentina Americas   1997     73.3 36203463      10967.  3.97e11 Rich        
+## # ℹ 290 more rows</code></pre>
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
 <p>This is an R Markdown document. Markdown is a simple formatting
@@ -381,6 +423,7 @@ chunk like this:</p>
 <p>Note that the <code>echo = FALSE</code> parameter was added to the
 code chunk to prevent printing of the R code that generated the
 plot.</p>
+</div>
 </div>
 
 
