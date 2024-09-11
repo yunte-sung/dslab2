@@ -6,8 +6,23 @@ date: "2024-09-11"
 
 
 Ctrl + option + i
+# Set-up your script ------------------------------------------------------
 ```{r}
+#install.packages(c("tidyverse", "gapminder", "pacman")) # uncomment if already installed
+pacman::p_load(tidyverse, gapminder)
+```
 
+# Load your Data into R ---------------------------------------------------
+```{r}
+data(gapminder)
+head(gapminder)
+```
+
+# Clean your Data ---------------------------------------------------------
+```{r}
+gapminder_clean <- gapminder %>% 
+  rename(life_exp = lifeExp, gdp_per_cap = gdpPercap) %>% 
+  mutate(gdp = pop * gdp_per_cap)
 ```
 
 
